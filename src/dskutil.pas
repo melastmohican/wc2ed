@@ -1,9 +1,14 @@
 unit DskUtil;
 
+{$MODE Delphi}
+
 interface
 
 uses
-  SysUtils, WinTypes, WinProcs;
+  SysUtils;
+
+const
+ HFILE_ERROR = -1;
 
 type
   { Common data types}
@@ -23,7 +28,7 @@ function Word2Exp(Value: Word) : Word;
 
 implementation
 
-function FindStr(hfile: Integer; fstr: PChar) : Longint;
+function FindStr(hfile: LongInt; fstr: PChar) : Longint;
 var
  sb: TStringBuffer;
  buff: Array[0..1023] of char;
@@ -34,9 +39,9 @@ var
  filpos,filmax: Longint;
 begin
 Result:= 0;
-filmax := _llseek(hfile,0,2);
-filpos := _llseek(hfile,0,0);
-_lread(hfile,@buff,1024);
+filmax := FileSeek(hfile,0,2);
+filpos := FileSeek(hfile,0,0);
+FileRead(hfile,buff,1024);
 sb.str := StrPas(fstr);
 while filmax > filpos do
 begin
@@ -60,8 +65,8 @@ begin
      Exit;
     end;
  end; {while i<1024}
- filpos := _llseek(hfile,0,1);
- _lread(hfile,@buff,1024);
+ filpos := FileSeek(hfile,0,1);
+ FileRead(hfile,buff,1024);
 end; {while filmax > filpos}
 end;
 

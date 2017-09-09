@@ -1,13 +1,17 @@
 program wc2ed;
 
-uses
-  Forms,
-  MainEd in 'src\MainEd.pas' {MainForm},
-  DskUtil in 'src\Dskutil.pas',
-  wc2unit in 'src\wc2unit.pas',
-  About in 'src\About.pas' {AboutBox};
+{$MODE Delphi}
 
-{$R *.RES}
+uses
+  Forms, Interfaces,
+  MainEd in 'src/mained.pas' {MainForm},
+  DskUtil in 'src/dskutil.pas',
+  wc2unit in 'src/wc2unit.pas',
+  About in 'src/about.pas' {AboutBox};
+
+{.$R *.RES}
+
+{$R *.res}
 
 begin
   Application.Initialize;

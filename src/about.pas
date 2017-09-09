@@ -1,8 +1,10 @@
 unit About;
 
+{$MODE Delphi}
+
 interface
 
-uses WinTypes, WinProcs, Classes, Graphics, Forms, Controls, StdCtrls,
+uses Classes, Graphics, Forms, Controls, StdCtrls,
   Buttons, ExtCtrls, SysUtils, ComCtrls;
 
 type
@@ -24,7 +26,7 @@ var
   AboutBox: TAboutBox;
 
 implementation
-{$R *.DFM}
+{$R *.lfm}
 
 end. // End of File
 

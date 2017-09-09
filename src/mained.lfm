@@ -1,0 +1,746 @@
+object MainForm: TMainForm
+  Left = 225
+  Height = 341
+  Top = 248
+  Width = 559
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
+  Caption = 'Warcraft II Save Edit'
+  ClientHeight = 341
+  ClientWidth = 559
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Menu = MainMenu
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  Position = poScreenCenter
+  LCLVersion = '1.6.4.0'
+  object StatusBar: TStatusBar
+    Left = 0
+    Height = 15
+    Top = 326
+    Width = 559
+    Panels = <    
+      item
+        Width = 80
+      end    
+      item
+        Width = 50
+      end>
+    SimplePanel = False
+  end
+  object Toolbar: TPanel
+    Left = 0
+    Height = 27
+    Top = 0
+    Width = 559
+    Align = alTop
+    BevelOuter = bvLowered
+    ClientHeight = 27
+    ClientWidth = 559
+    TabOrder = 1
+    object SpeedButton1: TSpeedButton
+      Left = 0
+      Height = 25
+      Top = 0
+      Width = 25
+      Glyph.Data = {
+        76010000424D7601000000000000760000002800000020000000100000000100
+        04000000000000010000130B0000130B00001000000000000000000000000000
+        800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+        FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+        3333333333FFFFF3333333333999993333333333F77777FFF333333999999999
+        33333337777FF377FF3333993370739993333377FF373F377FF3399993000339
+        993337777F777F3377F3393999707333993337F77737333337FF993399933333
+        399377F3777FF333377F993339903333399377F33737FF33377F993333707333
+        399377F333377FF3377F993333101933399377F333777FFF377F993333000993
+        399377FF3377737FF7733993330009993933373FF3777377F7F3399933000399
+        99333773FF777F777733339993707339933333773FF7FFF77333333999999999
+        3333333777333777333333333999993333333333377777333333
+      }
+      NumGlyphs = 2
+      OnClick = mExitClick
+    end
+    object SaveBtn: TSpeedButton
+      Left = 26
+      Height = 25
+      Top = 0
+      Width = 25
+      Glyph.Data = {
+        76010000424D7601000000000000760000002800000020000000100000000100
+        04000000000000010000120B0000120B00001000000000000000000000000000
+        800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+        FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+        333333FFFFFFFFFFFFF33000077777770033377777777777773F000007888888
+        00037F3337F3FF37F37F00000780088800037F3337F77F37F37F000007800888
+        00037F3337F77FF7F37F00000788888800037F3337777777337F000000000000
+        00037F3FFFFFFFFFFF7F00000000000000037F77777777777F7F000FFFFFFFFF
+        00037F7F333333337F7F000FFFFFFFFF00037F7F333333337F7F000FFFFFFFFF
+        00037F7F333333337F7F000FFFFFFFFF00037F7F333333337F7F000FFFFFFFFF
+        00037F7F333333337F7F000FFFFFFFFF07037F7F33333333777F000FFFFFFFFF
+        0003737FFFFFFFFF7F7330099999999900333777777777777733
+      }
+      NumGlyphs = 2
+      OnClick = SaveBtnClick
+    end
+  end
+  object AppSpace: TPanel
+    Left = 0
+    Height = 299
+    Top = 27
+    Width = 559
+    Align = alClient
+    ClientHeight = 299
+    ClientWidth = 559
+    TabOrder = 2
+    object ResPan: TPanel
+      Left = 170
+      Height = 251
+      Top = 47
+      Width = 388
+      Align = alClient
+      ClientHeight = 251
+      ClientWidth = 388
+      TabOrder = 3
+      object Gold: TLabel
+        Left = 16
+        Height = 15
+        Top = 12
+        Width = 23
+        Caption = 'Gold'
+        ParentColor = False
+      end
+      object Label3: TLabel
+        Left = 16
+        Height = 15
+        Top = 36
+        Width = 40
+        Caption = 'Lumber'
+        ParentColor = False
+      end
+      object Label4: TLabel
+        Left = 16
+        Height = 15
+        Top = 64
+        Width = 13
+        Caption = 'Oil'
+        ParentColor = False
+      end
+      object GoldEd: TSpinEdit
+        Left = 59
+        Height = 16
+        Top = 8
+        Width = 75
+        MaxValue = 0
+        TabOrder = 0
+      end
+      object LumberEd: TSpinEdit
+        Left = 59
+        Height = 16
+        Top = 32
+        Width = 75
+        MaxValue = 0
+        TabOrder = 1
+      end
+      object OilEd: TSpinEdit
+        Left = 59
+        Height = 16
+        Top = 58
+        Width = 75
+        MaxValue = 0
+        TabOrder = 2
+      end
+    end
+    object ObjPan: TPanel
+      Left = 170
+      Height = 251
+      Top = 47
+      Width = 388
+      Align = alClient
+      ClientHeight = 251
+      ClientWidth = 388
+      TabOrder = 2
+      object Label2: TLabel
+        Left = 20
+        Height = 15
+        Top = 12
+        Width = 26
+        Caption = 'Type'
+        ParentColor = False
+      end
+      object Label5: TLabel
+        Left = 20
+        Height = 15
+        Top = 62
+        Width = 36
+        Caption = 'Energy'
+        ParentColor = False
+      end
+      object Label6: TLabel
+        Left = 20
+        Height = 15
+        Top = 86
+        Width = 27
+        Caption = 'Mana'
+        ParentColor = False
+      end
+      object Label7: TLabel
+        Left = 20
+        Height = 15
+        Top = 112
+        Width = 22
+        Caption = 'Side'
+        ParentColor = False
+      end
+      object Label8: TLabel
+        Left = 20
+        Height = 15
+        Top = 134
+        Width = 27
+        Caption = 'Color'
+        ParentColor = False
+      end
+      object Label9: TLabel
+        Left = 196
+        Height = 15
+        Top = 130
+        Width = 54
+        Caption = 'Resources'
+        ParentColor = False
+      end
+      object Label10: TLabel
+        Left = 196
+        Height = 15
+        Top = 12
+        Width = 37
+        Caption = 'Bitmap'
+        ParentColor = False
+      end
+      object Label11: TLabel
+        Left = 20
+        Height = 15
+        Top = 36
+        Width = 28
+        Caption = 'Menu'
+        ParentColor = False
+      end
+      object TypeLab: TLabel
+        Left = 270
+        Height = 15
+        Top = 40
+        Width = 45
+        Caption = 'TypeLab'
+        ParentColor = False
+      end
+      object MenuLab: TLabel
+        Left = 270
+        Height = 15
+        Top = 54
+        Width = 47
+        Caption = 'MenuLab'
+        ParentColor = False
+      end
+      object BmpLab: TLabel
+        Left = 270
+        Height = 15
+        Top = 70
+        Width = 43
+        Caption = 'BmpLab'
+        ParentColor = False
+      end
+      object UnitType: TComboBox
+        Left = 63
+        Height = 20
+        Top = 8
+        Width = 100
+        ItemHeight = 0
+        Items.Strings = (
+          'Footman'
+          'Grunt'
+          'Peasant'
+          'Peon'
+          'Ballista'
+          'Catapult'
+          'Knight'
+          'Ogre'
+          'Elven Archer'
+          'Troll Axethrower'
+          'Mage'
+          'Death Knight'
+          'Paladin'
+          'Ogre-Mage'
+          'Dwarven Demolition Squad'
+          'Goblin Sappers'
+          'Peasant'
+          'Peon'
+          'Ranger'
+          'Berserker'
+          'Alleria'
+          'Teron Gorefiend'
+          'Khurdran'
+          'Dentorg'
+          'Khadgar'
+          'Grom Hellscream'
+          'Oil Tanker'
+          'Oil Tanker'
+          'Transport'
+          'Transport'
+          'Elven Destroyer'
+          'Troll Destroyer'
+          'Battleship'
+          'Ogre Juggernaught'
+          '?'
+          'Deathwing'
+          '?'
+          '?'
+          'Gnomish Submarine'
+          'Giant Turtle'
+          'Gnomish Flying Machine'
+          'Goblin Zeppelin'
+          'Gryphon Rider'
+          'Dragon'
+          'Turalyon'
+          'Eye Of Kilrogg'
+          'Danath'
+          'Korgath Bladefist'
+          '?'
+          'Chogall'
+          'Lothar'
+          'Guldan'
+          'Uther Lightbringer'
+          'Zuljin'
+          '?'
+          'Skeleton'
+          'Daemon'
+          'Critter'
+          'Farm'
+          'Pig Farm'
+          'Barracks'
+          'Barracks'
+          'Church'
+          'Altar Of Storms'
+          'Scout Tower'
+          'Watch Tower'
+          'Stables'
+          'Ogre Mound'
+          'Gnomish Inventor'
+          'Goblin Alchemist'
+          'Gryphon Aviary'
+          'Dragon Roost'
+          'Shipyard'
+          'Shipyard'
+          'Town Hall'
+          'Great Hall'
+          'Elven Lumber Mill'
+          'Troll Lumber Mill'
+          'Foundry'
+          'Foundry'
+          'Mage Tower'
+          'Temple Of The Damned'
+          'Blacksmith'
+          'Blacksmith'
+          'Refinery'
+          'Refinery'
+          'Oil Platform'
+          'Oil Platform'
+          'Keep'
+          'Stronghold'
+          'Castle'
+          'Fortress'
+          'Gold Mine'
+          'Oil Patch'
+          'Entry Point'
+          'Entry Point'
+          'Guard Tower'
+          'Guard Tower'
+          'Cannon Tower'
+          'Cannon Tower'
+          'Circle Of Power'
+          'Dark Portal'
+          'Runestone'
+          'Wall'
+          'Wall'
+        )
+        Style = csDropDownList
+        TabOrder = 0
+      end
+      object EnergyEd: TSpinEdit
+        Left = 63
+        Height = 16
+        Top = 56
+        Width = 75
+        MaxValue = 65535
+        TabOrder = 1
+      end
+      object ManaEd: TSpinEdit
+        Left = 63
+        Height = 16
+        Top = 82
+        Width = 75
+        MaxValue = 255
+        TabOrder = 2
+      end
+      object SideCB: TComboBox
+        Left = 63
+        Height = 20
+        Top = 107
+        Width = 75
+        ItemHeight = 0
+        Items.Strings = (
+          'Neutral'
+          'Red'
+          'Blue'
+          'Green'
+          'Violet'
+          'Orange'
+          'Black'
+          'White'
+          'Yellow'
+        )
+        Style = csDropDownList
+        TabOrder = 3
+      end
+      object ColorCB: TComboBox
+        Left = 63
+        Height = 20
+        Top = 130
+        Width = 75
+        ItemHeight = 0
+        Items.Strings = (
+          'Neutral'
+          'Red'
+          'Blue'
+          'Green'
+          'Violet'
+          'Orange'
+          'Black'
+          'White'
+          'Yellow'
+        )
+        Style = csDropDownList
+        TabOrder = 4
+      end
+      object ResoEd: TSpinEdit
+        Left = 252
+        Height = 16
+        Top = 126
+        Width = 75
+        MaxValue = 0
+        TabOrder = 5
+      end
+      object UnitBmp: TComboBox
+        Left = 252
+        Height = 20
+        Top = 8
+        Width = 100
+        ItemHeight = 0
+        Items.Strings = (
+          'Footman'
+          'Grunt'
+          'Peasant'
+          'Peon'
+          'Ballista'
+          'Catapult'
+          'Knight'
+          'Ogre'
+          'Elven Archer'
+          'Troll Axethrower'
+          'Mage'
+          'Death Knight'
+          'Paladin'
+          'Ogre-Mage'
+          'Dwarven Demolition Squad'
+          'Goblin Sappers'
+          'Peasant'
+          'Peon'
+          'Ranger'
+          'Berserker'
+          'Alleria'
+          'Teron Gorefiend'
+          'Khurdran'
+          'Dentorg'
+          'Khadgar'
+          'Grom Hellscream'
+          'Oil Tanker'
+          'Oil Tanker'
+          'Transport'
+          'Transport'
+          'Elven Destroyer'
+          'Troll Destroyer'
+          'Battleship'
+          'Ogre Juggernaught'
+          '?'
+          'Deathwing'
+          '?'
+          '?'
+          'Gnomish Submarine'
+          'Giant Turtle'
+          'Gnomish Flying Machine'
+          'Goblin Zeppelin'
+          'Gryphon Rider'
+          'Dragon'
+          'Turalyon'
+          'Eye Of Kilrogg'
+          'Danath'
+          'Korgath Bladefist'
+          '?'
+          'Chogall'
+          'Lothar'
+          'Guldan'
+          'Uther Lightbringer'
+          'Zuljin'
+          '?'
+          'Skeleton'
+          'Daemon'
+          'Critter'
+          'Farm'
+          'Pig Farm'
+          'Barracks'
+          'Barracks'
+          'Church'
+          'Altar Of Storms'
+          'Scout Tower'
+          'Watch Tower'
+          'Stables'
+          'Ogre Mound'
+          'Gnomish Inventor'
+          'Goblin Alchemist'
+          'Gryphon Aviary'
+          'Dragon Roost'
+          'Shipyard'
+          'Shipyard'
+          'Town Hall'
+          'Great Hall'
+          'Elven Lumber Mill'
+          'Troll Lumber Mill'
+          'Foundry'
+          'Foundry'
+          'Mage Tower'
+          'Temple Of The Damned'
+          'Blacksmith'
+          'Blacksmith'
+          'Refinery'
+          'Refinery'
+          'Oil Platform'
+          'Oil Platform'
+          'Keep'
+          'Stronghold'
+          'Castle'
+          'Fortress'
+          'Gold Mine'
+          'Oil Patch'
+          'Entry Point'
+          'Entry Point'
+          'Guard Tower'
+          'Guard Tower'
+          'Cannon Tower'
+          'Cannon Tower'
+          'Circle Of Power'
+          'Dark Portal'
+          'Runestone'
+          'Wall'
+          'Wall'
+        )
+        Style = csDropDownList
+        TabOrder = 6
+      end
+      object UnitMenu: TComboBox
+        Left = 63
+        Height = 20
+        Top = 32
+        Width = 100
+        ItemHeight = 0
+        Items.Strings = (
+          'Footman'
+          'Grunt'
+          'Peasant'
+          'Peon'
+          'Ballista'
+          'Catapult'
+          'Knight'
+          'Ogre'
+          'Elven Archer'
+          'Troll Axethrower'
+          'Mage'
+          'Death Knight'
+          'Paladin'
+          'Ogre-Mage'
+          'Dwarven Demolition Squad'
+          'Goblin Sappers'
+          'Peasant'
+          'Peon'
+          'Ranger'
+          'Berserker'
+          'Alleria'
+          'Teron Gorefiend'
+          'Khurdran'
+          'Dentorg'
+          'Khadgar'
+          'Grom Hellscream'
+          'Oil Tanker'
+          'Oil Tanker'
+          'Transport'
+          'Transport'
+          'Elven Destroyer'
+          'Troll Destroyer'
+          'Battleship'
+          'Ogre Juggernaught'
+          '?'
+          'Deathwing'
+          '?'
+          '?'
+          'Gnomish Submarine'
+          'Giant Turtle'
+          'Gnomish Flying Machine'
+          'Goblin Zeppelin'
+          'Gryphon Rider'
+          'Dragon'
+          'Turalyon'
+          'Eye Of Kilrogg'
+          'Danath'
+          'Korgath Bladefist'
+          '?'
+          'Chogall'
+          'Lothar'
+          'Guldan'
+          'Uther Lightbringer'
+          'Zuljin'
+          '?'
+          'Skeleton'
+          'Daemon'
+          'Critter'
+          'Farm'
+          'Pig Farm'
+          'Barracks'
+          'Barracks'
+          'Church'
+          'Altar Of Storms'
+          'Scout Tower'
+          'Watch Tower'
+          'Stables'
+          'Ogre Mound'
+          'Gnomish Inventor'
+          'Goblin Alchemist'
+          'Gryphon Aviary'
+          'Dragon Roost'
+          'Shipyard'
+          'Shipyard'
+          'Town Hall'
+          'Great Hall'
+          'Elven Lumber Mill'
+          'Troll Lumber Mill'
+          'Foundry'
+          'Foundry'
+          'Mage Tower'
+          'Temple Of The Damned'
+          'Blacksmith'
+          'Blacksmith'
+          'Refinery'
+          'Refinery'
+          'Oil Platform'
+          'Oil Platform'
+          'Keep'
+          'Stronghold'
+          'Castle'
+          'Fortress'
+          'Gold Mine'
+          'Oil Patch'
+          'Entry Point'
+          'Entry Point'
+          'Guard Tower'
+          'Guard Tower'
+          'Cannon Tower'
+          'Cannon Tower'
+          'Circle Of Power'
+          'Dark Portal'
+          'Runestone'
+          'Wall'
+          'Wall'
+        )
+        Style = csDropDownList
+        TabOrder = 7
+      end
+    end
+    object Panel1: TPanel
+      Left = 1
+      Height = 46
+      Top = 1
+      Width = 557
+      Align = alTop
+      BevelOuter = bvNone
+      ClientHeight = 46
+      ClientWidth = 557
+      TabOrder = 0
+      object Label1: TLabel
+        Left = 16
+        Height = 15
+        Top = 8
+        Width = 63
+        Caption = 'Game Name'
+        ParentColor = False
+      end
+      object GameName: TPanel
+        Left = 112
+        Height = 22
+        Top = 3
+        Width = 180
+        Alignment = taLeftJustify
+        BevelOuter = bvLowered
+        TabOrder = 0
+      end
+    end
+    object GameTree: TTreeView
+      Left = 1
+      Height = 251
+      Top = 47
+      Width = 169
+      Align = alLeft
+      DefaultItemHeight = 18
+      Indent = 19
+      TabOrder = 1
+      OnClick = GameTreeClick
+    end
+  end
+  object MainMenu: TMainMenu
+    left = 462
+    top = 65532
+    object mFile: TMenuItem
+      Caption = '&File'
+      object mOpen: TMenuItem
+        Caption = '&Open'
+        OnClick = mOpenClick
+      end
+      object mSave: TMenuItem
+        Caption = '&Save'
+      end
+      object N1: TMenuItem
+        Caption = '-'
+      end
+      object mExit: TMenuItem
+        Caption = 'E&xit'
+        OnClick = mExitClick
+      end
+    end
+    object mHelp: TMenuItem
+      Caption = '&Help'
+      object mAbout: TMenuItem
+        Caption = '&About'
+        OnClick = mAboutClick
+      end
+    end
+  end
+  object Timer: TTimer
+    OnTimer = TimerTimer
+    left = 434
+    top = 65532
+  end
+  object OpenDlg: TOpenDialog
+    DefaultExt = '.SAV'
+    Filter = 'Warcarft 2 Save File|*.sav'
+    InitialDir = '.'
+    Options = [ofPathMustExist, ofFileMustExist]
+    left = 408
+    top = 65532
+  end
+end

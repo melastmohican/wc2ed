@@ -1,5 +1,7 @@
 unit wc2Unit;
 
+{$MODE Delphi}
+
 interface
 
 type

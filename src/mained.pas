@@ -1,9 +1,11 @@
 unit MainEd;
 
+{$MODE Delphi}
+
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  LCLIntf, LCLType, LMessages, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   ComCtrls, Menus, ExtCtrls,
   About,DskUtil,wc2Unit, Buttons, StdCtrls, Spin;
 
@@ -89,7 +91,7 @@ var
   lSize,lRead: LongInt;
   URec: PUnitRec;
   RRec: PResRec;
-  FHandle: Integer;
+  FHandle: Longint;
   cBuf: PChar;
   UnitList, ResList: TList;
   iCount: Integer;
@@ -97,8 +99,8 @@ var
 
 implementation
 
-{$R VER.RES}
-{$R *.DFM}
+//{$R VER.RES}
+{$R *.lfm}
 
 procedure TMainForm.FormCreate(Sender: TObject);
 begin
@@ -139,24 +141,24 @@ var
 begin
 if OpenDlg.Execute then
  begin
-  if FHandle <> HFILE_ERROR then _lclose(fhandle);
+  if FHandle <> HFILE_ERROR then FileClose(fhandle);
   sb.str := OpenDlg.FileName + #0;
-  FHandle := _lopen(sb.cArray,OF_READWRITE + OF_SHARE_EXCLUSIVE);
+  FHandle := FileOpen(sb.cArray,fmOpenReadWrite or fmShareExclusive);
   if FHandle = HFILE_ERROR then
    begin
     MessageDlg('Cannot open ' + ExtractFileName(OpenDlg.FileName), mtError, [mbOK], 0);
    end
   else
    begin
-    lSize := _llseek(FHandle, 0, 2);
-    _llseek(FHandle, 0, 0);
+    lSize := FileSeek(FHandle, 0, fsFromEnd);
+    FileSeek(FHandle, 0, fsFromBeginning);
     if cBuf <> NIL then
      begin
       StrDispose(cBuf);
       cBuf := NIL;
      end;
     cBuf := StrAlloc(lSize + 2);
-    lRead := _lread(FHandle, cBuf, lSize);
+    lRead := FileRead(FHandle, cBuf^, lSize);
     GameName.Caption := Copy(StrPas(cBuf),1,Length(StrPas(cBuf))-1);
     GetUnits;
     ResPan.Visible := false;
@@ -369,23 +371,23 @@ begin
      begin
       New(pLong);
       SaveResRecord(RRec);
-      _llseek(FHandle, RRec^.iOffset, 0);
+      FileSeek(FHandle, RRec^.iOffset, 0);
       pLong^ := RRec^.lLumber;
-      _lwrite(FHandle, PChar(pLong),SizeOf(LongInt));
-      _llseek(FHandle, RRec^.iOffset + $40, 0);
+      FileWrite(FHandle, PChar(pLong),SizeOf(LongInt));
+      FileSeek(FHandle, RRec^.iOffset + $40, 0);
       pLong^ := RRec^.lGold;
-      _lwrite(FHandle, PChar(pLong),SizeOf(LongInt));
-      _llseek(FHandle, RRec^.iOffset + $80, 0);
+      FileWrite(FHandle, PChar(pLong),SizeOf(LongInt));
+      FileSeek(FHandle, RRec^.iOffset + $80, 0);
       pLong^ := RRec^.lOil;
-      _lwrite(FHandle, PChar(pLong),SizeOf(LongInt));
+      FileWrite(FHandle, PChar(pLong),SizeOf(LongInt));
       Dispose(pLong);
      end
     else if OldNode.Data <> nil then
      begin
       SaveUnitRecord(URec);
       LogRecord;
-      _llseek(FHandle, URec^.iOffset, 0);
-      _lwrite(FHandle, PChar(URec), SizeOf(TUnitRec) - SizeOf(LongInt));
+      FileSeek(FHandle, URec^.iOffset, 0);
+      FileWrite(FHandle, PChar(URec), SizeOf(TUnitRec) - SizeOf(LongInt));
      end;
    end;
   ReadRecord;
@@ -409,7 +411,8 @@ begin
     begin
      StrMove(PChar(@aRec), PChar(URec), SizeOf(TUnitRec){ - SizeOf(LongInt)});
      StrPCopy(buff,Application.ExeName);
-     GetFullPathName(PChar(@buff),SizeOf(path),PChar(@path),pFile);
+     //GetFullPathName(PChar(@buff),SizeOf(path),PChar(@path),pFile);
+     path := ExpandFileName(buff);
      StrCopy(pFile,cLog);
      StrPCopy(cSection,OldNode.Text + Format('%x',[URec.iOffset]));
      for i := 0 to 16 do
@@ -417,7 +420,7 @@ begin
        StrPCopy(cKey,Format('%5.5x',[(URec.iOffset+i*8)]));
        StrPCopy(cString,Format('%2.2x %2.2x %2.2x %2.2x %2.2x %2.2x %2.2x %2.2x',
         [aRec[i*8],aRec[i*8+1],aRec[i*8+2],aRec[i*8+3],aRec[i*8+4],aRec[i*8+5],aRec[i*8+6],aRec[i*8+7]]));
-       WritePrivateProfileString(cSection,cKey,cString,path);
+       //WritePrivateProfileString(cSection,cKey,cString,path);
       end;
     end;
   end;
