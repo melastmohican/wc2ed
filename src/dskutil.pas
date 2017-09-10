@@ -1,84 +1,118 @@
-unit DskUtil;
+
+Unit DskUtil;
 
 {$MODE Delphi}
 
-interface
+Interface
 
-uses
-  SysUtils;
+Uses 
+SysUtils;
 
-const
- HFILE_ERROR = -1;
+Const 
+  HFILE_ERROR: LongInt = -1;
 
-type
+Type 
   { Common data types}
-  { var sb: TStringBuffer;
+
+
+{ var sb: TStringBuffer;
   sb.Count := Byte( Actual lentgh of cArray)
   sb.cArray := address where charracters are copied
   }
-  TStringBuffer = record
-   case Integer of
-     0: (bCount: Byte; cArray : Array[0..254] of Char;);
-     1: (str: String[254]);
-  end;
+  TStringBuffer = Record
+    Case integer Of 
+      0: (bCount: byte;
+          cArray: Array[0..254] Of char;);
+      1: (str: String[254]);
+  End;
 
-function FindStr(hfile: Integer; fstr: PChar) : LongInt;
-function Exp2Word(Exp: Word) : Word;
-function Word2Exp(Value: Word) : Word;
+Function FindStr(hfile: integer; fstr: PChar): longint;
+Function ReadAllFile(FileName : PChar; Mode : Integer; handle: LongInt; out cBuf
+                     : PChar): Longint;
+Function Exp2Word(Exp: word): word;
+Function Word2Exp(Value: word): word;
 
-implementation
+Implementation
 
-function FindStr(hfile: LongInt; fstr: PChar) : Longint;
-var
- sb: TStringBuffer;
- buff: Array[0..1023] of char;
- P: PChar;
- i,j: integer;
- pos: integer;
- bFound: Boolean;
- filpos,filmax: Longint;
-begin
-Result:= 0;
-filmax := FileSeek(hfile,0,2);
-filpos := FileSeek(hfile,0,0);
-FileRead(hfile,buff,1024);
-sb.str := StrPas(fstr);
-while filmax > filpos do
-begin
- i := 0;
- bFound := false;
- while i<1024 do
-  begin
-   if buff[i] = sb.cArray[0] then
-    begin
-     bFound := false;
-     for j:= 0 to sb.bCount-1 do
-       if buff[i+j] = sb.cArray[j] then bFound := true
-       else bFound := false;
-     //if buff[i+j+1] <> #0 then bFound := false;
-    end; {if buff[i] = sb.cArray[0]}
-   if not bFound then
-    inc(i)
-   else
-    begin
-     Result:= (filpos + i);
-     Exit;
-    end;
- end; {while i<1024}
- filpos := FileSeek(hfile,0,1);
- FileRead(hfile,buff,1024);
-end; {while filmax > filpos}
-end;
+Function FindStr(hfile: longint; fstr: PChar): longint;
 
-function Exp2Word(Exp: Word) : Word;
-begin
- Result := Exp mod 100 + (Exp div 100) * 256;
-end;
+Var 
+  sb: TStringBuffer;
+  buff: array[0..1023] Of char;
+  P: PChar;
+  i, j: integer;
+  pos: integer;
+  bFound: boolean;
+  filpos, filmax: longint;
+Begin
+  Result := 0;
+  filmax := FileSeek(hfile, 0, 2);
+  filpos := FileSeek(hfile, 0, 0);
+  FileRead(hfile, buff, 1024);
+  sb.str := StrPas(fstr);
+  While filmax > filpos Do
+    Begin
+      i := 0;
+      bFound := False;
+      While i < 1024 Do
+        Begin
+          If buff[i] = sb.cArray[0] Then
+            Begin
+              bFound := False;
+              For j := 0 To sb.bCount - 1 Do
+                If buff[i + j] = sb.cArray[j] Then
+                  bFound := True
+                Else
+                  bFound := False;
+              //if buff[i+j+1] <> #0 then bFound := false;
+            End; {if buff[i] = sb.cArray[0]}
+          If Not bFound Then
+            Inc(i)
+          Else
+            Begin
+              Result := (filpos + i);
+              Exit;
+            End;
+        End; {while i<1024}
+      filpos := FileSeek(hfile, 0, 1);
+      FileRead(hfile, buff, 1024);
+    End; {while filmax > filpos}
+End;
 
-function Word2Exp(Value: Word) : Word;
-begin
- Result := Value mod 256 + (Value div 256) * 100;
-end;
+
+Function ReadAllFile(FileName : PChar; Mode : Integer; handle: LongInt; out cBuf
+                     : PChar): Longint;
+
+Var 
+  lSize: longint;
+
+Begin
+  If handle <> HFILE_ERROR Then
+    FileClose(handle);
+  handle := FileOpen(FileName, Mode);
+  If handle <> HFILE_ERROR Then
+    Begin
+      lSize := FileSeek(handle, 0, fsFromEnd);
+      FileSeek(handle, 0, fsFromBeginning);
+      If cBuf <> Nil Then
+        Begin
+          StrDispose(cBuf);
+          cBuf := Nil;
+        End;
+      cBuf := StrAlloc(lSize + 2);
+      ReadAllFile := FileRead(handle, cBuf^, lSize);
+    End;
+End;
+
+Function Exp2Word(Exp: word): word;
+Begin
+  Result := Exp Mod 100 + (Exp Div 100) * 256;
+End;
+
+Function Word2Exp(Value: word): word;
+Begin
+  Result := Value Mod 256 + (Value Div 256) * 100;
+End;
 
 {End of file}
-end.
+End.

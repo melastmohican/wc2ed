@@ -3,7 +3,8 @@ program wc2ed;
 {$MODE Delphi}
 
 uses
-  Forms, Interfaces,
+  Forms,
+  Interfaces,
   MainEd in 'src/mained.pas' {MainForm},
   DskUtil in 'src/dskutil.pas',
   wc2unit in 'src/wc2unit.pas',

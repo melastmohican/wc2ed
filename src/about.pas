@@ -1,14 +1,15 @@
-unit About;
+
+Unit About;
 
 {$MODE Delphi}
 
-interface
+Interface
 
-uses Classes, Graphics, Forms, Controls, StdCtrls,
-  Buttons, ExtCtrls, SysUtils, ComCtrls;
+Uses Classes, Graphics, Forms, Controls, StdCtrls,
+Buttons, ExtCtrls, SysUtils;
 
-type
-  TAboutBox = class(TForm)
+Type 
+  TAboutBox = Class(TForm)
     Panel1: TPanel;
     OKButton: TBitBtn;
     Bevel1: TBevel;
@@ -16,17 +17,18 @@ type
     Notes: TLabel;
     Product: TMemo;
     Logo: TImage;
-  private
+    Private 
     { Private declarations }
-  public
+    Public 
     { Public declarations }
-  end;
+  End;
 
-var
+Var 
   AboutBox: TAboutBox;
 
-implementation
+Implementation
+
 {$R *.lfm}
 
-end. // End of File
-
+End.
+// End of File
