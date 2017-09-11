@@ -13,12 +13,6 @@ Const
 
 Type 
   { Common data types}
-
-
-{ var sb: TStringBuffer;
-  sb.Count := Byte( Actual lentgh of cArray)
-  sb.cArray := address where charracters are copied
-  }
   TStringBuffer = Record
     Case integer Of 
       0: (bCount: byte;
@@ -26,15 +20,15 @@ Type
       1: (str: String[254]);
   End;
 
-Function FindStr(hfile: integer; fstr: PChar): longint;
-Function ReadAllFile(FileName : PChar; Mode : Integer; handle: LongInt; out cBuf
-                     : PChar): Longint;
+Function FindStr(handle: integer; fstr: PChar): longint;
+Function ReadAllFile(FileName : PChar; Mode : Integer; handle: LongInt; out cBuf : PChar): Longint;
+Function WriteRecord(handle, offset: LongInt;  cBuf : PChar; length: LongInt) : LongInt;
 Function Exp2Word(Exp: word): word;
 Function Word2Exp(Value: word): word;
 
 Implementation
 
-Function FindStr(hfile: longint; fstr: PChar): longint;
+Function FindStr(handle: longint; fstr: PChar): longint;
 
 Var 
   sb: TStringBuffer;
@@ -46,9 +40,9 @@ Var
   filpos, filmax: longint;
 Begin
   Result := 0;
-  filmax := FileSeek(hfile, 0, 2);
-  filpos := FileSeek(hfile, 0, 0);
-  FileRead(hfile, buff, 1024);
+  filmax := FileSeek(handle, 0, 2);
+  filpos := FileSeek(handle, 0, 0);
+  FileRead(handle, buff, 1024);
   sb.str := StrPas(fstr);
   While filmax > filpos Do
     Begin
@@ -74,18 +68,16 @@ Begin
               Exit;
             End;
         End; {while i<1024}
-      filpos := FileSeek(hfile, 0, 1);
-      FileRead(hfile, buff, 1024);
+      filpos := FileSeek(handle, 0, 1);
+      FileRead(handle, buff, 1024);
     End; {while filmax > filpos}
 End;
 
 
-Function ReadAllFile(FileName : PChar; Mode : Integer; handle: LongInt; out cBuf
-                     : PChar): Longint;
+Function ReadAllFile(FileName : PChar; Mode : Integer; handle: LongInt; out cBuf : PChar): Longint;
 
 Var 
   lSize: longint;
-
 Begin
   If handle <> HFILE_ERROR Then
     FileClose(handle);
@@ -102,6 +94,12 @@ Begin
       cBuf := StrAlloc(lSize + 2);
       ReadAllFile := FileRead(handle, cBuf^, lSize);
     End;
+End;
+
+Function WriteRecord(handle, offset: LongInt;  cBuf : PChar; length: LongInt): LongInt;
+Begin
+  FileSeek(handle, offset, 0);
+  WriteRecord := FileWrite(handle, cBuf, length);
 End;
 
 Function Exp2Word(Exp: word): word;

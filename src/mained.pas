@@ -375,23 +375,19 @@ begin
         begin
           New(pLong);
           SaveResRecord(RRec);
-          FileSeek(FHandle, RRec^.iOffset, 0);
           pLong^ := RRec^.lLumber;
-          FileWrite(FHandle, PChar(pLong), SizeOf(longint));
-          FileSeek(FHandle, RRec^.iOffset + $40, 0);
+          WriteRecord(FHandle,RRec^.iOffset,PChar(pLong), SizeOf(longint));
           pLong^ := RRec^.lGold;
-          FileWrite(FHandle, PChar(pLong), SizeOf(longint));
-          FileSeek(FHandle, RRec^.iOffset + $80, 0);
+          WriteRecord(FHandle,RRec^.iOffset + $40,PChar(pLong), SizeOf(longint));
           pLong^ := RRec^.lOil;
-          FileWrite(FHandle, PChar(pLong), SizeOf(longint));
+          WriteRecord(FHandle,RRec^.iOffset + $80,PChar(pLong), SizeOf(longint));
           Dispose(pLong);
         end
         else if OldNode.Data <> nil then
         begin
           SaveUnitRecord(URec);
           LogRecord;
-          FileSeek(FHandle, URec^.iOffset, 0);
-          FileWrite(FHandle, PChar(URec), SizeOf(TUnitRec) - SizeOf(longint));
+          WriteRecord(FHandle,URec^.iOffset,PChar(URec),SizeOf(TUnitRec) - SizeOf(longint));
         end;
     end;
     ReadRecord;
@@ -417,7 +413,6 @@ begin
     begin
       StrMove(PChar(@aRec), PChar(URec), SizeOf(TUnitRec){ - SizeOf(LongInt)});
       StrPCopy(buff, Application.ExeName);
-      //GetFullPathName(PChar(@buff),SizeOf(path),PChar(@path),pFile);
       path := ExpandFileName(buff);
       StrCopy(pFile, cLog);
       ini := TINIFile.Create(cLog);

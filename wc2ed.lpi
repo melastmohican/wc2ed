@@ -13,6 +13,7 @@
       <Title Value="wc2ed"/>
       <ResourceType Value="res"/>
       <UseXPManifest Value="True"/>
+      <Icon Value="0"/>
     </General>
     <i18n>
       <EnableI18N LFM="False"/>
@@ -20,8 +21,9 @@
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
-      <BuildNr Value="14"/>
-      <StringTable ProductVersion=""/>
+      <MajorVersionNr Value="1"/>
+      <BuildNr Value="115"/>
+      <StringTable InternalName="wc2ed" OriginalFilename="wc2ed" ProductName="Warcarft II Save Editor" ProductVersion=""/>
     </VersionInfo>
     <BuildModes Count="1">
       <Item1 Name="Default" Default="True"/>
